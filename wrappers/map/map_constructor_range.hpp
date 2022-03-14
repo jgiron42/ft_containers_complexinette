@@ -9,11 +9,11 @@
 #include <stdlib.h>
 
 template <bool is_sorted>
-class constructor_range : public lib_complexinette::measurable_class
+class map_constructor_range : public lib_complexinette::measurable_class
 {
 public:
 	std::vector<NAMESPACE::map<int, int>::value_type> to_insert;
-	constructor_range(int n) : lib_complexinette::measurable_class(n)
+	map_constructor_range(int n) : lib_complexinette::measurable_class(n)
 	{
 		srand(0);
 	}
@@ -23,7 +23,7 @@ public:
 		if (is_sorted)
 		{
 			auto tmp = get_random_map(n);
-//			to_insert.insert(to_insert.begin(), tmp.begin(), tmp.end());
+//			to_insert.insert(to_insert.map_begin(), tmp.map_begin(), tmp.map_end());
 			for (auto i = tmp.begin(); i != tmp.end(); i++)
 				to_insert.push_back(*i);
 		}

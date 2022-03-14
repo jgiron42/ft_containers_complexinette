@@ -8,12 +8,12 @@
 #include "ft_containers_complexinette.hpp"
 #include <stdlib.h>
 
-class insert_range : public lib_complexinette::measurable_class
+class map_insert_range : public lib_complexinette::measurable_class
 {
 public:
 	std::vector<NAMESPACE::map<int, int>::value_type> to_insert;
 	NAMESPACE::map<int, int>	current;
-	insert_range(int n) : lib_complexinette::measurable_class(n)
+	map_insert_range(int n) : lib_complexinette::measurable_class(n)
 	{
 		srand(0);
 	}

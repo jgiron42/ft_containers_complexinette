@@ -2,20 +2,20 @@
 // Created by joachim on 3/13/22.
 //
 
-#ifndef FT_CONTAINERS_COMPLEXINETTE_EQUAL_HPP
-#define FT_CONTAINERS_COMPLEXINETTE_EQUAL_HPP
-#include "measurable_class.hpp"
-#include "ft_containers_complexinette.hpp"
+#ifndef FT_CONTAINERS_COMPLEXINETTE_MAP_EQUAL_HPP
+#define FT_CONTAINERS_COMPLEXINETTE_MAP_EQUAL_HPP
+#include "../../lib_complexinette/measurable_class.hpp"
+#include "../../ft_containers_complexinette.hpp"
 #include <stdlib.h>
 
 template <bool equal_size>
-class equal : public lib_complexinette::measurable_class
+class map_equal : public lib_complexinette::measurable_class
 {
 	public:
 	NAMESPACE::map<int, int> m1;
 	NAMESPACE::map<int, int> m2;
 
-	equal(int n) : lib_complexinette::measurable_class(n)
+	map_equal(int n) : lib_complexinette::measurable_class(n)
 	{
 	}
 
@@ -34,7 +34,7 @@ class equal : public lib_complexinette::measurable_class
 	}
 	void	operator()(void)
 	{
-		(m1 == m2);
+		(void)(m1 == m2);
 	}
 };
-#endif //FT_CONTAINERS_COMPLEXINETTE_EQUAL_HPP
+#endif //FT_CONTAINERS_COMPLEXINETTE_MAP_EQUAL_HPP

@@ -4,18 +4,18 @@
 
 #ifndef COMPLEXINETTE_WRAPPED_DESTRUCTOR_HPP
 #define COMPLEXINETTE_WRAPPED_DESTRUCTOR_HPP
-#include "measurable_class.hpp"
-#include "ft_containers_complexinette.hpp"
+#include "../../lib_complexinette/measurable_class.hpp"
+#include "../../ft_containers_complexinette.hpp"
 #include <stdlib.h>
 
-class destructor : public lib_complexinette::measurable_class
+class map_destructor : public lib_complexinette::measurable_class
 {
 public:
 	NAMESPACE::map<int, int> *to_destroy;
-	destructor(int n) : lib_complexinette::measurable_class(n), to_destroy(NULL)
+	map_destructor(int n) : lib_complexinette::measurable_class(n), to_destroy(NULL)
 	{
 	}
-	~destructor()
+	~map_destructor()
 	{
 		free(to_destroy);
 	}

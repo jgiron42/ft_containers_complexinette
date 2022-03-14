@@ -4,16 +4,16 @@
 
 #ifndef COMPLEXINETTE_WRAPPED_INSERT_HPP
 #define COMPLEXINETTE_WRAPPED_INSERT_HPP
-#include "measurable_class.hpp"
-#include "ft_containers_complexinette.hpp"
+#include "../../lib_complexinette/measurable_class.hpp"
+#include "../../ft_containers_complexinette.hpp"
 #include <stdlib.h>
 
-class insert_one : public lib_complexinette::measurable_class
+class map_insert_one : public lib_complexinette::measurable_class
 {
 public:
 	NAMESPACE::map<int, int> current;
 	NAMESPACE::pair<const int, int> *to_insert;
-	insert_one(int n) : lib_complexinette::measurable_class(n), to_insert(NULL)
+	map_insert_one(int n) : lib_complexinette::measurable_class(n), to_insert(NULL)
 	{
 		srand(0);
 	}

@@ -2,19 +2,19 @@
 // Created by joachim on 3/13/22.
 //
 
-#ifndef FT_CONTAINERS_COMPLEXINETTE_LESS_HPP
-#define FT_CONTAINERS_COMPLEXINETTE_LESS_HPP
+#ifndef FT_CONTAINERS_COMPLEXINETTE_MAP_LESS_HPP
+#define FT_CONTAINERS_COMPLEXINETTE_MAP_LESS_HPP
 #include "measurable_class.hpp"
 #include "ft_containers_complexinette.hpp"
 #include <stdlib.h>
 
-class less : public lib_complexinette::measurable_class
+class map_less : public lib_complexinette::measurable_class
 {
 	public:
 	NAMESPACE::map<int, int> m1;
 	NAMESPACE::map<int, int> m2;
 
-	less(int n) : lib_complexinette::measurable_class(n)
+	map_less(int n) : lib_complexinette::measurable_class(n)
 	{
 	}
 
@@ -27,7 +27,7 @@ class less : public lib_complexinette::measurable_class
 	}
 	void	operator()(void)
 	{
-		(m1 < m2);
+		(void)(m1 < m2);
 	}
 };
-#endif //FT_CONTAINERS_COMPLEXINETTE_LESS_HPP
+#endif //FT_CONTAINERS_COMPLEXINETTE_MAP_LESS_HPP
