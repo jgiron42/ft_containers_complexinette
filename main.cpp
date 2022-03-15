@@ -20,10 +20,31 @@
 #include "wrappers/map/erase_iterator.hpp"
 #include "wrappers/map/map_erase_key.hpp"
 #include "wrappers/map/erase_range.hpp"
-#include "wrappers/map/swap.hpp"
+#include "wrappers/map/map_swap.hpp"
 #include "wrappers/map/map_find.hpp"
 #include "wrappers/map/map_equal.hpp"
 #include "wrappers/map/map_less.hpp"
+
+#include "wrappers/vector/vector_insert_one.hpp"
+#include "wrappers/vector/insert_hint.hpp"
+#include "wrappers/vector/vector_insert_range.hpp"
+#include "wrappers/vector/vector_begin.hpp"
+#include "wrappers/vector/vector_end.hpp"
+#include "wrappers/vector/vector_constructor_default.hpp"
+#include "wrappers/vector/vector_constructor_range.hpp"
+#include "wrappers/vector/vector_constructor_copy.hpp"
+#include "wrappers/vector/vector_destructor.hpp"
+#include "wrappers/vector/vector_get_allocator.hpp"
+#include "wrappers/vector/vector_size.hpp"
+#include "wrappers/vector/vector_empty.hpp"
+#include "wrappers/vector/vector_max_size.hpp"
+#include "wrappers/vector/vector_clear.hpp"
+#include "wrappers/vector/erase_iterator.hpp"
+#include "wrappers/vector/vector_erase_key.hpp"
+#include "wrappers/vector/erase_range.hpp"
+#include "wrappers/vector/vector_swap.hpp"
+#include "wrappers/vector/vector_equal.hpp"
+#include "wrappers/vector/vector_less.hpp"
 
 template <class C>
 void test_comp(lib_complexinette::complexities wanted, std::string const &name)
@@ -39,10 +60,8 @@ void test_comp(lib_complexinette::complexities wanted, std::string const &name)
 	std::cout << SH_WHITE;
 }
 
-int main(int argc, char **argv)
+void	test_map()
 {
-	test_comp<map_equal<true> >(lib_complexinette::LINEAR, "map_equal with same map_size");
-
 	test_comp<map_insert_one>(lib_complexinette::LOG, "map_insert_one");
 //	test_comp<insert_hint>( lib_complexinette::CONST, "insert_hint");
 	test_comp<map_insert_range>(lib_complexinette::LINEARITHMIC, "map_insert_range");
@@ -64,10 +83,22 @@ int main(int argc, char **argv)
 //	test_comp<erase_iterator>(lib_complexinette::CONST, "erase_iterator");
 	test_comp<map_erase_key>(lib_complexinette::LOG, "map_erase_key");
 //	test_comp<erase_range>(lib_complexinette::LINEAR, "erase_range");
-	test_comp<swap>(lib_complexinette::CONST, "swap");
+	test_comp<map_swap>(lib_complexinette::CONST, "map_swap");
 	test_comp<map_count>(lib_complexinette::LOG, "map_count");
 	test_comp<map_find>(lib_complexinette::LOG, "map_find");
 	test_comp<map_equal<true> >(lib_complexinette::LINEAR, "map_equal with same size");
 	test_comp<map_equal<false> >(lib_complexinette::CONST, "map_equal with different size");
 	test_comp<map_less>(lib_complexinette::LINEAR, "map_less");
+}
+
+void test_vect(void)
+{
+	test_comp<vector_swap>(lib_complexinette::CONST, "vector_swap");
+	test_comp<vector_insert_range>(lib_complexinette::LINEAR, "vector_insert");
+}
+
+int main(int argc, char **argv)
+{
+	test_vect();
+	test_map();
 }
