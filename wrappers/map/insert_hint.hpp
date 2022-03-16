@@ -16,7 +16,7 @@ public:
 	NAMESPACE::pair<const int, int> *to_insert;
 	insert_hint(int n) : lib_complexinette::measurable_class(n), to_insert(NULL)
 	{
-		srand(0);
+		srand(time(NULL));
 	}
 	void set(void)
 	{

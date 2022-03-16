@@ -15,7 +15,7 @@ public:
 	NAMESPACE::pair<const int, int> *to_insert;
 	map_insert_one(int n) : lib_complexinette::measurable_class(n), to_insert(NULL)
 	{
-		srand(0);
+		srand(time(NULL));
 	}
 	void set(void)
 	{

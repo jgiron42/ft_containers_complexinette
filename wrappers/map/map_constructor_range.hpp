@@ -15,7 +15,7 @@ public:
 	std::vector<NAMESPACE::map<int, int>::value_type> to_insert;
 	map_constructor_range(int n) : lib_complexinette::measurable_class(n)
 	{
-		srand(0);
+		srand(time(NULL));
 	}
 	void set(void)
 	{
