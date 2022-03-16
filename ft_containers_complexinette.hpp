@@ -1,7 +1,7 @@
 #ifndef FT_CONTAINERS_COMPLEXINETTE_H
 #define FT_CONTAINERS_COMPLEXINETTE_H
 #ifndef NAMESPACE
-# define NAMESPACE ft
+# define NAMESPACE std
 #endif
 #include "includes.hpp"
 #include "shell_colors.hpp"
@@ -10,6 +10,7 @@
 #include <map>
 #include <vector>
 #include <iostream>
+#include <time.h>
 
 template <typename T>
 T *get_random_array(long int n);
