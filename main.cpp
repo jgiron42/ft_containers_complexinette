@@ -46,59 +46,85 @@
 #include "wrappers/vector/vector_equal.hpp"
 #include "wrappers/vector/vector_less.hpp"
 
-template <class C>
-void test_comp(lib_complexinette::complexities wanted, std::string const &name)
-{
-	lib_complexinette::complexities result = lib_complexinette::get_complexity<C>();
+struct job {
+	std::string name;
+	lib_complexinette::complexities expected;
+	std::future<lib_complexinette::complexities> result;
+};
 
-	if (result <= wanted)
+template <class C>
+void launch_job(std::list<job *> &job_list, lib_complexinette::complexities wanted, std::string const &name)
+{
+	job *j = new job;
+	j->name = name;
+	j->expected = wanted;
+	j->result = std::async(lib_complexinette::get_complexity<C>);
+	job_list.push_back(j);
+}
+
+void get_result(job &j)
+{
+	j.result.wait();
+	lib_complexinette::complexities result = j.result.get();
+	std::string result_str;
+	if (result <= j.expected)
 		std::cout << SH_GREEN;
 	else
 		std::cout << SH_RED;
-	std::cout << name << " complexity is: [" << lib_complexinette::names[result]
-	<< "] expected: [" << lib_complexinette::names[wanted] << "]" << std::endl;
+	if (result > lib_complexinette::SIGNALED)
+		result_str = strsignal(result - lib_complexinette::SIGNALED);
+	else
+		result_str = lib_complexinette::names[result];
+	std::cout << j.name << " complexity is: [" << result_str
+	<< "] expected: [" << lib_complexinette::names[j.expected] << "]" << std::endl;
 	std::cout << SH_WHITE;
 }
 
-void	test_map()
+void	test_map(std::list<job *> &job_list)
 {
-	test_comp<map_insert_one>(lib_complexinette::LOG, "map_insert_one");
-//	test_comp<insert_hint>( lib_complexinette::CONST, "insert_hint");
-	test_comp<map_insert_range>(lib_complexinette::LINEARITHMIC, "map_insert_range");
-	test_comp<map_upper_bound>(lib_complexinette::LOG, "map_upper_bound");
-	test_comp<map_lower_bound>(lib_complexinette::LOG, "map_lower_bound");
-	test_comp<map_equal_range>(lib_complexinette::LOG, "map_equal_range");
-	test_comp<map_begin>(lib_complexinette::CONST, "map_begin");
-	test_comp<map_end>(lib_complexinette::CONST, "map_end");
-	test_comp<map_constructor_default>(lib_complexinette::CONST, "map_constructor_default");
-	test_comp<map_constructor_range<true> >(lib_complexinette::LINEAR, "map_constructor_range sorted");
-	test_comp<map_constructor_range<false> >(lib_complexinette::LINEARITHMIC, "map_constructor_range not sorted");
-	test_comp<map_constructor_copy >(lib_complexinette::LINEAR, "map_constructor_copy");
-	test_comp<map_destructor >(lib_complexinette::LINEAR, "map_destructor");
-	test_comp<map_get_allocator>(lib_complexinette::CONST, "map_get_allocator");
-	test_comp<map_empty>(lib_complexinette::CONST, "map_empty");
-	test_comp<map_size>(lib_complexinette::CONST, "map_size");
-	test_comp<map_max_size>(lib_complexinette::CONST, "map_max_size");
-	test_comp<map_clear>(lib_complexinette::LINEAR, "map_clear");
-//	test_comp<erase_iterator>(lib_complexinette::CONST, "erase_iterator");
-	test_comp<map_erase_key>(lib_complexinette::LOG, "map_erase_key");
-//	test_comp<erase_range>(lib_complexinette::LINEAR, "erase_range");
-	test_comp<map_swap>(lib_complexinette::CONST, "map_swap");
-	test_comp<map_count>(lib_complexinette::LOG, "map_count");
-	test_comp<map_find>(lib_complexinette::LOG, "map_find");
-	test_comp<map_equal<true> >(lib_complexinette::LINEAR, "map_equal with same size");
-	test_comp<map_equal<false> >(lib_complexinette::CONST, "map_equal with different size");
-	test_comp<map_less>(lib_complexinette::LINEAR, "map_less");
+	launch_job<map_insert_one>(job_list, lib_complexinette::LOG, "map_insert_one");
+//	launch_job<insert_hint>(job_list,  lib_complexinette::CONST, "insert_hint");
+	launch_job<map_insert_range>(job_list, lib_complexinette::LINEARITHMIC, "map_insert_range");
+	launch_job<map_upper_bound>(job_list, lib_complexinette::LOG, "map_upper_bound");
+	launch_job<map_lower_bound>(job_list, lib_complexinette::LOG, "map_lower_bound");
+	launch_job<map_equal_range>(job_list, lib_complexinette::LOG, "map_equal_range");
+	launch_job<map_begin>(job_list, lib_complexinette::CONST, "map_begin");
+	launch_job<map_end>(job_list, lib_complexinette::CONST, "map_end");
+	launch_job<map_constructor_default>(job_list, lib_complexinette::CONST, "map_constructor_default");
+	launch_job<map_constructor_range<true> >(job_list, lib_complexinette::LINEAR, "map_constructor_range sorted");
+	launch_job<map_constructor_range<false> >(job_list, lib_complexinette::LINEARITHMIC, "map_constructor_range not sorted");
+	launch_job<map_constructor_copy >(job_list, lib_complexinette::LINEAR, "map_constructor_copy");
+	launch_job<map_destructor >(job_list, lib_complexinette::LINEAR, "map_destructor");
+	launch_job<map_get_allocator>(job_list, lib_complexinette::CONST, "map_get_allocator");
+	launch_job<map_empty>(job_list, lib_complexinette::CONST, "map_empty");
+	launch_job<map_size>(job_list, lib_complexinette::CONST, "map_size");
+	launch_job<map_max_size>(job_list, lib_complexinette::CONST, "map_max_size");
+	launch_job<map_clear>(job_list, lib_complexinette::LINEAR, "map_clear");
+//	launch_job<erase_iterator>(job_list, lib_complexinette::CONST, "erase_iterator");
+	launch_job<map_erase_key>(job_list, lib_complexinette::LOG, "map_erase_key");
+//	launch_job<erase_range>(job_list, lib_complexinette::LINEAR, "erase_range");
+	launch_job<map_swap>(job_list, lib_complexinette::CONST, "map_swap");
+	launch_job<map_count>(job_list, lib_complexinette::LOG, "map_count");
+	launch_job<map_find>(job_list, lib_complexinette::LOG, "map_find");
+	launch_job<map_equal<true> >(job_list, lib_complexinette::LINEAR, "map_equal with same size");
+	launch_job<map_equal<false> >(job_list, lib_complexinette::CONST, "map_equal with different size");
+	launch_job<map_less>(job_list, lib_complexinette::LINEAR, "map_less");
 }
 
-void test_vect(void)
+void test_vect(std::list<job *> &job_list)
 {
-	test_comp<vector_swap>(lib_complexinette::CONST, "vector_swap");
-	test_comp<vector_insert_range>(lib_complexinette::LINEAR, "vector_insert");
+	launch_job<vector_swap>(job_list, lib_complexinette::CONST, "vector_swap");
+	launch_job<vector_insert_range>(job_list, lib_complexinette::LINEAR, "vector_insert");
 }
 
 int main(int argc, char **argv)
 {
-	test_vect();
-	test_map();
+	std::list<job *> job_list;
+	test_vect(job_list);
+	test_map(job_list);
+	for ( auto i : job_list)
+	{
+		get_result(*i);
+		delete i;
+	}
 }
