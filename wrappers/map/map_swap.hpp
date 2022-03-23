@@ -2,19 +2,19 @@
 // Created by joachim on 3/13/22.
 //
 
-#ifndef FT_CONTAINERS_COMPLEXINETTE_SWAP_HPP
-#define FT_CONTAINERS_COMPLEXINETTE_SWAP_HPP
+#ifndef FT_CONTAINERS_COMPLEXINETTE_MAP_SWAP_HPP
+#define FT_CONTAINERS_COMPLEXINETTE_MAP_SWAP_HPP
 #include "measurable_class.hpp"
 #include "ft_containers_complexinette.hpp"
 #include <stdlib.h>
 
-class swap : public lib_complexinette::measurable_class
+class map_swap : public lib_complexinette::measurable_class
 {
 	public:
 	NAMESPACE::map<int, int> m1;
 	NAMESPACE::map<int, int> m2;
 
-	swap(int n) : lib_complexinette::measurable_class(n)
+	map_swap(int n) : lib_complexinette::measurable_class(n)
 	{
 	}
 
@@ -28,4 +28,4 @@ class swap : public lib_complexinette::measurable_class
 		m1.swap(m2);
 	}
 };
-#endif //FT_CONTAINERS_COMPLEXINETTE_SWAP_HPP
+#endif //FT_CONTAINERS_COMPLEXINETTE_MAP_SWAP_HPP

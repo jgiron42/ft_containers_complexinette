@@ -52,3 +52,11 @@ NAMESPACE::map<int, int> get_random_map(long int n)
 	return (ret);
 }
 
+NAMESPACE::vector<int> get_random_vector(long int n)
+{
+
+	int *tmp = get_random_array<int>(n);
+	NAMESPACE::vector<int> ret(tmp, tmp + n);
+	delete [] tmp;
+	return (ret);
+}

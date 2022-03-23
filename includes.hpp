@@ -6,6 +6,7 @@
 #define FT_CONTAINERS_COMPLEXINETTE_INCLUDES_HPP
 
 #include "map.hpp"
+#include "vector.hpp"
 #include "pair.hpp"
 
 #endif //FT_CONTAINERS_COMPLEXINETTE_INCLUDES_HPP

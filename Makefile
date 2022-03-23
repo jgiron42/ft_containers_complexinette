@@ -4,9 +4,11 @@ SRCS = main.cpp get_random_array.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
-LIB = lib_complexinette/libcomplexinette.a
+LIB = ../complexinette/libcomplexinette.a
+#LIB = lib_complexinette/libcomplexinette.a
 
-INCLUDES += . lib_complexinette
+INCLUDES += . ../complexinette
+#INCLUDES += . lib_complexinette
 
 INCLUDES_FLAG = $(foreach dir, $(INCLUDES), -I $(dir))
 
@@ -20,10 +22,11 @@ CXXFLAGS = -g3 -O0
 all : $(NAME)
 
 $(LIB):
-		@make -C lib_complexinette
+		@make -C ../complexinette
+		@#make -C lib_complexinette
 
 $(NAME): $(OBJS) $(LIB)
-		$(CC) $(CXXFLAGS) $(INCLUDES_FLAG) -o $(NAME) $(OBJS) $(LIB)
+		$(CC) $(CXXFLAGS) $(INCLUDES_FLAG) -o $(NAME) $(OBJS) $(LIB) -lpthread
 
 clean:
 		rm -f $(OBJS)
