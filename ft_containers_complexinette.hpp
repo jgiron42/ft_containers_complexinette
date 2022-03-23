@@ -11,6 +11,7 @@
 #include <vector>
 #include <iostream>
 #include <time.h>
+#include "measurable_class.hpp"
 
 template <typename T>
 T *get_random_array(long int n);
