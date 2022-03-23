@@ -30,9 +30,15 @@
 #include "wrappers/vector/vector_insert_count.hpp"
 #include "wrappers/vector/vector_begin.hpp"
 #include "wrappers/vector/vector_end.hpp"
+#include "wrappers/vector/vector_capacity.hpp"
 #include "wrappers/vector/vector_constructor_default.hpp"
 #include "wrappers/vector/vector_constructor_range.hpp"
 #include "wrappers/vector/vector_constructor_copy.hpp"
+#include "wrappers/vector/vector_constructor_count.hpp"
+#include "wrappers/vector/vector_at.hpp"
+#include "wrappers/vector/vector_operator_index.hpp"
+#include "wrappers/vector/vector_front.hpp"
+#include "wrappers/vector/vector_back.hpp"
 #include "wrappers/vector/vector_destructor.hpp"
 #include "wrappers/vector/vector_get_allocator.hpp"
 #include "wrappers/vector/vector_size.hpp"
@@ -46,7 +52,7 @@
 #include "wrappers/vector/vector_equal.hpp"
 #include "wrappers/vector/vector_less.hpp"
 
-template <class C>
+template <Measurable C>
 void test_comp(lib_complexinette::complexities wanted, std::string const &name)
 {
 	lib_complexinette::complexities result = lib_complexinette::get_complexity<C>();
@@ -97,9 +103,9 @@ void test_vect(void)
 {
 	std::cout << "Test vector:" << std::endl;
 
-	test_comp<vector_constructor_default>(lib_complexinette::CONST, "vector_constructor_default");
 	test_comp<vector_constructor_range>(lib_complexinette::LINEAR, "vector_constructor_range");
-	// missing: count constructor
+	test_comp<vector_constructor_default>(lib_complexinette::CONST, "vector_constructor_default");
+	test_comp<vector_constructor_count>(lib_complexinette::LINEAR, "vector_constructor_count");
 	test_comp<vector_constructor_copy>(lib_complexinette::LINEAR, "vector_constructor_copy");
 
 	test_comp<vector_destructor>(lib_complexinette::LINEAR, "vector_destructor");
@@ -110,11 +116,11 @@ void test_vect(void)
 
 	test_comp<vector_get_allocator >(lib_complexinette::CONST, "vector_get_allocator");
 
-	//missing: at
+	test_comp<vector_at >(lib_complexinette::CONST, "vector_at");
+	test_comp<vector_operator_index >(lib_complexinette::CONST, "vector_operator_index");
 
-	//missing: operator[]
-
-	//missing: front back
+	test_comp<vector_front >(lib_complexinette::CONST, "front");
+	test_comp<vector_back >(lib_complexinette::CONST, "back");
 
 	test_comp<vector_begin>(lib_complexinette::CONST, "vector_begin");
 	test_comp<vector_end>(lib_complexinette::CONST, "vector_end");
@@ -125,9 +131,9 @@ void test_vect(void)
 
 	// missing: reserve
 
-	// missing: capacity
+	test_comp<vector_capacity>(lib_complexinette::CONST, "vector_capacity");
 
-	test_comp<vector_clear>(lib_complexinette::CONST, "vector_clear");
+	test_comp<vector_clear>(lib_complexinette::LINEAR, "vector_clear");
 
 	test_comp<vector_insert_range<1> >(lib_complexinette::LINEAR, "insert_range v1");
 	test_comp<vector_insert_range<2> >(lib_complexinette::LINEAR, "insert_range v2");
