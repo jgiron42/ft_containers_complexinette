@@ -16,7 +16,7 @@ public:
 	int						to_search;
 	map_upper_bound(int n) : n(n), to_search(0)
 	{
-		srand(0);
+		srand(time(NULL));
 	}
 	void set(void)
 	{

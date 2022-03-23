@@ -14,7 +14,7 @@ public:
 	NAMESPACE::vector<int> to_insert;
 	vector_constructor_range(int n) : lib_complexinette::measurable_class(n)
 	{
-		srand(0);
+		srand(time(NULL));
 	}
 	void set(void)
 	{

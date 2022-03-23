@@ -26,21 +26,27 @@
 #include "wrappers/map/map_less.hpp"
 
 #include "wrappers/vector/vector_insert_one.hpp"
-#include "wrappers/vector/insert_hint.hpp"
 #include "wrappers/vector/vector_insert_range.hpp"
+#include "wrappers/vector/vector_insert_count.hpp"
 #include "wrappers/vector/vector_begin.hpp"
 #include "wrappers/vector/vector_end.hpp"
+#include "wrappers/vector/vector_capacity.hpp"
 #include "wrappers/vector/vector_constructor_default.hpp"
 #include "wrappers/vector/vector_constructor_range.hpp"
 #include "wrappers/vector/vector_constructor_copy.hpp"
+#include "wrappers/vector/vector_constructor_count.hpp"
+#include "wrappers/vector/vector_at.hpp"
+#include "wrappers/vector/vector_operator_index.hpp"
+#include "wrappers/vector/vector_front.hpp"
+#include "wrappers/vector/vector_back.hpp"
 #include "wrappers/vector/vector_destructor.hpp"
 #include "wrappers/vector/vector_get_allocator.hpp"
 #include "wrappers/vector/vector_size.hpp"
 #include "wrappers/vector/vector_empty.hpp"
 #include "wrappers/vector/vector_max_size.hpp"
 #include "wrappers/vector/vector_clear.hpp"
-#include "wrappers/vector/erase_iterator.hpp"
-#include "wrappers/vector/vector_erase_key.hpp"
+#include "wrappers/vector/vector_erase_iterator.hpp"
+#include "wrappers/vector/vector_erase_iterator.hpp"
 #include "wrappers/vector/erase_range.hpp"
 #include "wrappers/vector/vector_swap.hpp"
 #include "wrappers/vector/vector_equal.hpp"
@@ -52,7 +58,7 @@ struct job {
 	std::future<lib_complexinette::complexities> result;
 };
 
-template <class C>
+template <Measurable C>
 void launch_job(std::list<job *> &job_list, lib_complexinette::complexities wanted, std::string const &name)
 {
 	job *j = new job;
@@ -68,9 +74,9 @@ void get_result(job &j)
 	lib_complexinette::complexities result = j.result.get();
 	std::string result_str;
 	if (result <= j.expected)
-		std::cout << SH_GREEN;
+		std::cout << SH_GREEN << "[OK]";
 	else
-		std::cout << SH_RED;
+		std::cout << SH_RED << "[KO]";
 	if (result > lib_complexinette::SIGNALED)
 		result_str = strsignal(result - lib_complexinette::SIGNALED);
 	else
@@ -113,8 +119,61 @@ void	test_map(std::list<job *> &job_list)
 
 void test_vect(std::list<job *> &job_list)
 {
-	launch_job<vector_swap>(job_list, lib_complexinette::CONST, "vector_swap");
-	launch_job<vector_insert_range>(job_list, lib_complexinette::LINEAR, "vector_insert");
+	std::cout << "Test vector:" << std::endl;
+
+	test_comp<vector_constructor_range>(lib_complexinette::LINEAR, "vector_constructor_range");
+	test_comp<vector_constructor_default>(lib_complexinette::CONST, "vector_constructor_default");
+	test_comp<vector_constructor_count>(lib_complexinette::LINEAR, "vector_constructor_count");
+	test_comp<vector_constructor_copy>(lib_complexinette::LINEAR, "vector_constructor_copy");
+
+	test_comp<vector_destructor>(lib_complexinette::LINEAR, "vector_destructor");
+
+	//missing: operator=
+
+	//missing: assign
+
+	test_comp<vector_get_allocator >(lib_complexinette::CONST, "vector_get_allocator");
+
+	test_comp<vector_at >(lib_complexinette::CONST, "vector_at");
+	test_comp<vector_operator_index >(lib_complexinette::CONST, "vector_operator_index");
+
+	test_comp<vector_front >(lib_complexinette::CONST, "front");
+	test_comp<vector_back >(lib_complexinette::CONST, "back");
+
+	test_comp<vector_begin>(lib_complexinette::CONST, "vector_begin");
+	test_comp<vector_end>(lib_complexinette::CONST, "vector_end");
+
+	test_comp<vector_empty>(lib_complexinette::CONST, "vector_empty");
+	test_comp<vector_size>(lib_complexinette::CONST, "vector_size");
+	test_comp<vector_max_size>(lib_complexinette::CONST, "vector_max_size");
+
+	// missing: reserve
+
+	test_comp<vector_capacity>(lib_complexinette::CONST, "vector_capacity");
+
+	test_comp<vector_clear>(lib_complexinette::LINEAR, "vector_clear");
+
+	test_comp<vector_insert_range<1> >(lib_complexinette::LINEAR, "insert_range v1");
+	test_comp<vector_insert_range<2> >(lib_complexinette::LINEAR, "insert_range v2");
+	test_comp<vector_insert_count<1> >(lib_complexinette::LINEAR, "insert_count v1");
+	test_comp<vector_insert_count<2> >(lib_complexinette::LINEAR, "insert_count v2");
+	test_comp<vector_insert_one >(lib_complexinette::LINEAR, "insert_one");
+
+	test_comp<vector_erase_iterator>(lib_complexinette::LINEAR, "erase_iterator");
+
+	//missing other erase
+
+	//missing push_back
+
+	//missing pop_back
+
+	//missing resize
+
+	test_comp<vector_swap>(lib_complexinette::CONST, "swap");
+
+	test_comp<vector_equal<false> >(lib_complexinette::CONST, "equality with different size");
+	test_comp<vector_equal<true> >(lib_complexinette::LINEAR, "equality with same size");
+	test_comp<vector_less>(lib_complexinette::LINEAR, "less");
 }
 
 int main(int argc, char **argv)

@@ -15,7 +15,7 @@ public:
 	NAMESPACE::map<int, int>::iterator to_erase;
 	erase_iterator(int n) : lib_complexinette::measurable_class(n)
 	{
-		srand(0);
+		srand(time(NULL));
 	}
 	void set(void)
 	{
