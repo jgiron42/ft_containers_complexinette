@@ -1,4 +1,4 @@
-NAME = ft_containers_complexinette
+NAME = complexinette
 
 SRCS = main.cpp get_random_array.cpp
 
@@ -12,7 +12,7 @@ INCLUDES_FLAG = $(foreach dir, $(INCLUDES), -I $(dir))
 
 CC = clang++
 
-CXXFLAGS = -g3 -O0 -std=c++20
+CXXFLAGS = -g3 -O0
 
 .cpp.o :
 		$(CC) $(CXXFLAGS) $(INCLUDES_FLAG) -c $< -o ${<:.cpp=.o}
@@ -23,7 +23,7 @@ $(LIB):
 		@make -C lib_complexinette
 
 $(NAME): $(OBJS) $(LIB)
-		$(CC) $(CXXFLAGS) $(INCLUDES_FLAG) -o $(NAME) $(OBJS) $(LIB) -lpthread
+		$(CC) $(CXXFLAGS) $(INCLUDES_FLAG) -o $@ -D $@ $(OBJS) $(LIB) -lpthread
 
 clean:
 		rm -f $(OBJS)

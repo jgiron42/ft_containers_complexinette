@@ -52,13 +52,14 @@
 #include "wrappers/vector/vector_equal.hpp"
 #include "wrappers/vector/vector_less.hpp"
 
+
 struct job {
 	std::string name;
 	lib_complexinette::complexities expected;
 	std::future<lib_complexinette::complexities> result;
 };
 
-template <Measurable C>
+template <class C>
 void launch_job(std::list<job *> &job_list, lib_complexinette::complexities wanted, std::string const &name)
 {
 	job *j = new job;
@@ -74,9 +75,9 @@ void get_result(job &j)
 	lib_complexinette::complexities result = j.result.get();
 	std::string result_str;
 	if (result <= j.expected)
-		std::cout << SH_GREEN << "[OK]";
+		std::cout << SH_GREEN << "[OK] ";
 	else
-		std::cout << SH_RED << "[KO]";
+		std::cout << SH_RED << "[KO] ";
 	if (result > lib_complexinette::SIGNALED)
 		result_str = strsignal(result - lib_complexinette::SIGNALED);
 	else
@@ -85,7 +86,8 @@ void get_result(job &j)
 	<< "] expected: [" << lib_complexinette::names[j.expected] << "]" << std::endl;
 	std::cout << SH_WHITE;
 }
-
+#define TEST_MAP
+#ifdef TEST_MAP
 void	test_map(std::list<job *> &job_list)
 {
 	launch_job<map_insert_one>(job_list, lib_complexinette::LOG, "map_insert_one");
@@ -116,7 +118,9 @@ void	test_map(std::list<job *> &job_list)
 	launch_job<map_equal<false> >(job_list, lib_complexinette::CONST, "map_equal with different size");
 	launch_job<map_less>(job_list, lib_complexinette::LINEAR, "map_less");
 }
+#endif
 
+#ifdef TEST_VECTOR
 void test_vect(std::list<job *> &job_list)
 {
 	std::cout << "Test vector:" << std::endl;
@@ -175,12 +179,17 @@ void test_vect(std::list<job *> &job_list)
 	launch_job<vector_equal<true> >(job_list, lib_complexinette::LINEAR, "equality with same size");
 	launch_job<vector_less>(job_list, lib_complexinette::LINEAR, "less");
 }
+#endif
 
 int main(int argc, char **argv)
 {
 	std::list<job *> job_list;
+#ifdef TEST_VECTOR
 	test_vect(job_list);
+#endif
+#ifdef TEST_MAP
 	test_map(job_list);
+#endif
 	for ( auto i : job_list)
 	{
 		get_result(*i);

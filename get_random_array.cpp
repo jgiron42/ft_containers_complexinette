@@ -4,27 +4,9 @@ template <typename T>
 T *get_random_array(long int n)
 {
 	T *ret = new T[n];
-	static int fd = -1;
 
-	if (n == -1)
-	{
-		close(fd);
-		return NULL;
-	}
-	if (fd == -1)
-	{
-		fd = open("/dev/urandom", O_RDONLY);
-		if (fd == -1)
-		{
-			perror("complexinette: open");
-			exit(1);
-		}
-	}
-	if (read(fd, ret, n * sizeof(T)) != n * sizeof(T))
-	{
-		perror("complexinette: read");
-		exit(1);
-	}
+	for (int i = 0; i < n; i++)
+		ret[i] = rand();
 	return (ret);
 }
 
@@ -43,12 +25,10 @@ T *get_random_array(long int n)
 
 NAMESPACE::map<int, int> get_random_map(long int n)
 {
-	int *tmp = get_random_array<int>(n);
 	NAMESPACE::map<int, int> ret;
 
 	for (int i = 0; i < n; i++)
-		ret[tmp[i]] = tmp[i];
-	delete [] tmp;
+		ret[rand()] = rand();
 	return (ret);
 }
 

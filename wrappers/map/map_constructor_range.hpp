@@ -13,6 +13,8 @@ class map_constructor_range : public lib_complexinette::measurable_class
 {
 public:
 	std::vector<NAMESPACE::map<int, int>::value_type> to_insert;
+	input_iterator<std::vector<NAMESPACE::map<int, int>::value_type>::iterator> begin;
+	input_iterator<std::vector<NAMESPACE::map<int, int>::value_type>::iterator> end;
 	map_constructor_range(int n) : lib_complexinette::measurable_class(n)
 	{
 		srand(time(NULL));
@@ -33,10 +35,12 @@ public:
 			for (int i = 0; i < n; i++)
 				to_insert.push_back(NAMESPACE::map<int, int>::value_type(tmp[i], tmp[i]));
 		}
+		begin = input_iterator<std::vector<NAMESPACE::map<int, int>::value_type>::iterator>(to_insert.begin());
+		end = input_iterator<std::vector<NAMESPACE::map<int, int>::value_type>::iterator>(to_insert.end());
 	}
 	void	operator()(void)
 	{
-		(void)NAMESPACE::map<int, int>(to_insert.begin(), to_insert.end());
+		(void)NAMESPACE::map<int, int>(begin, end);
 	}
 };
 
