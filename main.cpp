@@ -86,7 +86,6 @@ void get_result(job &j)
 	<< "] expected: [" << lib_complexinette::names[j.expected] << "]" << std::endl;
 	std::cout << SH_WHITE;
 }
-#define TEST_MAP
 #ifdef TEST_MAP
 void	test_map(std::list<job *> &job_list)
 {
@@ -184,6 +183,13 @@ void test_vect(std::list<job *> &job_list)
 int main(int argc, char **argv)
 {
 	std::list<job *> job_list;
+#ifndef TEST_MAP
+#ifndef TEST_VECTOR
+#ifndef TEST_STACK
+	std::cerr << "Please define one of TEST_MAP, TEST_VECTOR or TEST_STACK in your include file" << std::endl;
+#endif
+#endif
+#endif
 #ifdef TEST_VECTOR
 	test_vect(job_list);
 #endif
