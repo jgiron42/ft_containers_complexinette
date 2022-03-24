@@ -4,7 +4,7 @@
 
 #ifndef FT_CONTAINERS_COMPLEXINETTE_VECTOR_OPERATOR_INDEX_HPP
 #define FT_CONTAINERS_COMPLEXINETTE_VECTOR_OPERATOR_INDEX_HPP
-#include "../../lib_complexinette/measurable_class.hpp"
+#include "../../lib_complexinette/measurable_concept.hpp"
 #include "../../ft_containers_complexinette.hpp"
 #include <stdlib.h>
 

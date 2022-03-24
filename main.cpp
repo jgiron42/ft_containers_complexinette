@@ -121,45 +121,45 @@ void test_vect(std::list<job *> &job_list)
 {
 	std::cout << "Test vector:" << std::endl;
 
-	test_comp<vector_constructor_range>(lib_complexinette::LINEAR, "vector_constructor_range");
-	test_comp<vector_constructor_default>(lib_complexinette::CONST, "vector_constructor_default");
-	test_comp<vector_constructor_count>(lib_complexinette::LINEAR, "vector_constructor_count");
-	test_comp<vector_constructor_copy>(lib_complexinette::LINEAR, "vector_constructor_copy");
+	launch_job<vector_constructor_range>(job_list, lib_complexinette::LINEAR, "vector_constructor_range");
+	launch_job<vector_constructor_default>(job_list, lib_complexinette::CONST, "vector_constructor_default");
+	launch_job<vector_constructor_count>(job_list, lib_complexinette::LINEAR, "vector_constructor_count");
+	launch_job<vector_constructor_copy>(job_list, lib_complexinette::LINEAR, "vector_constructor_copy");
 
-	test_comp<vector_destructor>(lib_complexinette::LINEAR, "vector_destructor");
+	launch_job<vector_destructor>(job_list, lib_complexinette::LINEAR, "vector_destructor");
 
 	//missing: operator=
 
 	//missing: assign
 
-	test_comp<vector_get_allocator >(lib_complexinette::CONST, "vector_get_allocator");
+	launch_job<vector_get_allocator >(job_list, lib_complexinette::CONST, "vector_get_allocator");
 
-	test_comp<vector_at >(lib_complexinette::CONST, "vector_at");
-	test_comp<vector_operator_index >(lib_complexinette::CONST, "vector_operator_index");
+	launch_job<vector_at >(job_list, lib_complexinette::CONST, "vector_at");
+	launch_job<vector_operator_index >(job_list, lib_complexinette::CONST, "vector_operator_index");
 
-	test_comp<vector_front >(lib_complexinette::CONST, "front");
-	test_comp<vector_back >(lib_complexinette::CONST, "back");
+	launch_job<vector_front >(job_list, lib_complexinette::CONST, "front");
+	launch_job<vector_back >(job_list, lib_complexinette::CONST, "back");
 
-	test_comp<vector_begin>(lib_complexinette::CONST, "vector_begin");
-	test_comp<vector_end>(lib_complexinette::CONST, "vector_end");
+	launch_job<vector_begin>(job_list, lib_complexinette::CONST, "vector_begin");
+	launch_job<vector_end>(job_list, lib_complexinette::CONST, "vector_end");
 
-	test_comp<vector_empty>(lib_complexinette::CONST, "vector_empty");
-	test_comp<vector_size>(lib_complexinette::CONST, "vector_size");
-	test_comp<vector_max_size>(lib_complexinette::CONST, "vector_max_size");
+	launch_job<vector_empty>(job_list, lib_complexinette::CONST, "vector_empty");
+	launch_job<vector_size>(job_list, lib_complexinette::CONST, "vector_size");
+	launch_job<vector_max_size>(job_list, lib_complexinette::CONST, "vector_max_size");
 
 	// missing: reserve
 
-	test_comp<vector_capacity>(lib_complexinette::CONST, "vector_capacity");
+	launch_job<vector_capacity>(job_list, lib_complexinette::CONST, "vector_capacity");
 
-	test_comp<vector_clear>(lib_complexinette::LINEAR, "vector_clear");
+	launch_job<vector_clear>(job_list, lib_complexinette::LINEAR, "vector_clear");
 
-	test_comp<vector_insert_range<1> >(lib_complexinette::LINEAR, "insert_range v1");
-	test_comp<vector_insert_range<2> >(lib_complexinette::LINEAR, "insert_range v2");
-	test_comp<vector_insert_count<1> >(lib_complexinette::LINEAR, "insert_count v1");
-	test_comp<vector_insert_count<2> >(lib_complexinette::LINEAR, "insert_count v2");
-	test_comp<vector_insert_one >(lib_complexinette::LINEAR, "insert_one");
+	launch_job<vector_insert_range<1> >(job_list, lib_complexinette::LINEAR, "insert_range v1");
+	launch_job<vector_insert_range<2> >(job_list, lib_complexinette::LINEAR, "insert_range v2");
+	launch_job<vector_insert_count<1> >(job_list, lib_complexinette::LINEAR, "insert_count v1");
+	launch_job<vector_insert_count<2> >(job_list, lib_complexinette::LINEAR, "insert_count v2");
+	launch_job<vector_insert_one >(job_list, lib_complexinette::LINEAR, "insert_one");
 
-	test_comp<vector_erase_iterator>(lib_complexinette::LINEAR, "erase_iterator");
+	launch_job<vector_erase_iterator>(job_list, lib_complexinette::LINEAR, "erase_iterator");
 
 	//missing other erase
 
@@ -169,11 +169,11 @@ void test_vect(std::list<job *> &job_list)
 
 	//missing resize
 
-	test_comp<vector_swap>(lib_complexinette::CONST, "swap");
+	launch_job<vector_swap>(job_list, lib_complexinette::CONST, "swap");
 
-	test_comp<vector_equal<false> >(lib_complexinette::CONST, "equality with different size");
-	test_comp<vector_equal<true> >(lib_complexinette::LINEAR, "equality with same size");
-	test_comp<vector_less>(lib_complexinette::LINEAR, "less");
+	launch_job<vector_equal<false> >(job_list, lib_complexinette::CONST, "equality with different size");
+	launch_job<vector_equal<true> >(job_list, lib_complexinette::LINEAR, "equality with same size");
+	launch_job<vector_less>(job_list, lib_complexinette::LINEAR, "less");
 }
 
 int main(int argc, char **argv)

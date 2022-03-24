@@ -4,7 +4,7 @@
 
 #ifndef FT_CONTAINERS_COMPLEXINETTE_VECTOR_EMPTY_HPP
 #define FT_CONTAINERS_COMPLEXINETTE_VECTOR_EMPTY_HPP
-#include "../../lib_complexinette/measurable_class.hpp"
+#include "../../lib_complexinette/measurable_concept.hpp"
 #include "../../ft_containers_complexinette.hpp"
 #include <stdlib.h>
 
@@ -23,7 +23,7 @@ class vector_empty : public lib_complexinette::measurable_class
 	}
 	void	operator()(void)
 	{
-		current.empty();
+		(void)current.empty();
 	}
 };
 #endif //FT_CONTAINERS_COMPLEXINETTE_VECTOR_EMPTY_HPP

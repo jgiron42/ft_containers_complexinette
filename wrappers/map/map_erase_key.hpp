@@ -4,7 +4,7 @@
 
 #ifndef COMPLEXINETTE_WRAPPED_ERASE_KEY_HPP
 #define COMPLEXINETTE_WRAPPED_ERASE_KEY_HPP
-#include "../../lib_complexinette/measurable_class.hpp"
+#include "../../lib_complexinette/measurable_concept.hpp"
 #include "../../ft_containers_complexinette.hpp"
 #include <stdlib.h>
 

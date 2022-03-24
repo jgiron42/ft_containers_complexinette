@@ -4,7 +4,7 @@
 
 #ifndef COMPLEXINETTE_WRAPPED_INSERT_HINT_HPP
 #define COMPLEXINETTE_WRAPPED_INSERT_HINT_HPP
-#include "measurable_class.hpp"
+#include "measurable_concept.hpp"
 #include "ft_containers_complexinette.hpp"
 #include <stdlib.h>
 
