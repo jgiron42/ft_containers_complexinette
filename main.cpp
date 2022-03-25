@@ -52,27 +52,24 @@
 #include "wrappers/vector/vector_equal.hpp"
 #include "wrappers/vector/vector_less.hpp"
 
-
 struct job {
 	std::string name;
 	lib_complexinette::complexities expected;
+#ifdef MULTI_THREADED
 	std::future<lib_complexinette::complexities> result;
+#else
+	lib_complexinette::complexities result;
+#endif
 };
-
-template <class C>
-void launch_job(std::list<job *> &job_list, lib_complexinette::complexities wanted, std::string const &name)
-{
-	job *j = new job;
-	j->name = name;
-	j->expected = wanted;
-	j->result = std::async(lib_complexinette::get_complexity<C>);
-	job_list.push_back(j);
-}
 
 void get_result(job &j)
 {
+#ifdef MULTI_THREADED
 	j.result.wait();
 	lib_complexinette::complexities result = j.result.get();
+#else
+	lib_complexinette::complexities result = j.result;
+#endif
 	std::string result_str;
 	if (result <= j.expected)
 		std::cout << SH_GREEN << "[OK] ";
@@ -83,9 +80,36 @@ void get_result(job &j)
 	else
 		result_str = lib_complexinette::names[result];
 	std::cout << j.name << " complexity is: [" << result_str
-	<< "] expected: [" << lib_complexinette::names[j.expected] << "]" << std::endl;
+			  << "] expected: [" << lib_complexinette::names[j.expected] << "]" << std::endl;
 	std::cout << SH_WHITE;
 }
+
+void jobs_wait(std::list<job *> &job_list)
+{
+	for ( auto i : job_list)
+	{
+		get_result(*i);
+		delete i;
+	}
+	job_list.clear();
+}
+
+template <class C>
+void launch_job(std::list<job *> &job_list, lib_complexinette::complexities wanted, std::string const &name)
+{
+	job *j = new job;
+	j->name = name;
+	j->expected = wanted;
+#ifdef MULTI_THREADED
+	j->result = std::async(lib_complexinette::get_complexity<C>);
+	job_list.push_back(j);
+#else
+	j->result = lib_complexinette::get_complexity<C>();
+	get_result(*j);
+	delete j;
+#endif
+}
+
 #ifdef TEST_MAP
 void	test_map(std::list<job *> &job_list)
 {
@@ -196,9 +220,7 @@ int main(int argc, char **argv)
 #ifdef TEST_MAP
 	test_map(job_list);
 #endif
-	for ( auto i : job_list)
-	{
-		get_result(*i);
-		delete i;
-	}
+#ifdef MULTI_THREADED
+	jobs_wait(job_list);
+#endif
 }
