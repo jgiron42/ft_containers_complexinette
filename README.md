@@ -1,9 +1,11 @@
-# ft_containers_complexinette
+# ft_containers_complexinette (personal project)
 profiling a base de regression non lineaire pour le projet ft_containers de 42
 
 this tester use my lib_complexinette to find the complexities of your ft_containers then compare it to what the ISO specify.
-⚠️ this tester only work on linux 🐧
 
+⚠️ this tester only work on linux 🐧 (because it use GNU perf)
+
+:warning: this tester give an **aproximation** of the complexity it is still under developement
 ## usage
 
 ```
